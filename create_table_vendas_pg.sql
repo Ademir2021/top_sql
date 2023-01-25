@@ -9,7 +9,33 @@ ALTER TABLE
   public.filiais
 ADD
   CONSTRAINT filiais_pkey PRIMARY KEY (id_filial)
-/**end*/
+/**end 01*/
+
+CREATE TABLE
+  public.brands ( 
+    id_brand serial NOT NULL,
+    created_at timestamp without time zone NOT NULL DEFAULT now(),
+    name_brand VARCHAR (60)
+  );
+
+ALTER TABLE
+  public.brands
+ADD
+  CONSTRAINT brands_pkey PRIMARY KEY (id_brand)
+/**end 02*/
+
+CREATE TABLE
+  public.sectors ( 
+    id_sector serial NOT NULL,
+    created_at timestamp without time zone NOT NULL DEFAULT now(),
+    name_sector VARCHAR (60)
+  );
+
+ALTER TABLE
+  public.sectors
+ADD
+  CONSTRAINT sectors_pkey PRIMARY KEY (id_sector)
+/**end 03*/
 
 CREATE TABLE /**Postgres */
   public.persons ( 
@@ -27,7 +53,7 @@ ALTER TABLE
   public.persons
 ADD
   CONSTRAINT persons_pkey PRIMARY KEY (id_person)
-/**end*/
+/**end 04*/
 
 CREATE TABLE
   public.sales ( 
@@ -44,5 +70,41 @@ ALTER TABLE
   public.sales
 ADD
   CONSTRAINT sales_pkey PRIMARY KEY (id_sale)
-/**end*/
+/**end 05*/
 
+CREATE TABLE
+  public.products ( 
+    id_product serial NOT NULL,
+    created_at timestamp without time zone NOT NULL DEFAULT now(),
+    descric_product VARCHAR(60) NULL,
+    val_product NUMERIC(18,2) NULL,
+    val_min_product NUMERIC(18,2) NULL,
+    fk_brand integer,
+    fk_sector integer,
+    FOREIGN KEY (fk_brand) REFERENCES brands(id_brand) ON DELETE CASCADE,
+    FOREIGN KEY (fk_sector) REFERENCES sectors(id_sector) ON DELETE CASCADE
+  );
+
+ALTER TABLE
+  public.products
+ADD
+  CONSTRAINT products_pkey PRIMARY KEY (id_product)
+/**end 06*/
+
+CREATE TABLE
+  public.itens_sale ( 
+    id_item_sequen serial NOT NULL,
+    created_at timestamp without time zone NOT NULL DEFAULT now(),
+    fk_sale INTEGER,
+    fk_product INTEGER,
+    amount_product INTEGER,
+    val_product NUMERIC(18,2),
+    total_product NUMERIC(18,2),
+    FOREIGN KEY (fk_sale) REFERENCES sales(id_sale) ON DELETE CASCADE,
+    FOREIGN KEY (fk_product) REFERENCES products(id_product) ON DELETE CASCADE
+  );
+
+ALTER TABLE
+  public.itens_sale
+ADD
+  CONSTRAINT itens_sale_pkey PRIMARY KEY (id_item_sequen, fk_sale)
