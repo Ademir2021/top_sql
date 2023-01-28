@@ -37,3 +37,4 @@ filiais, persons, sales
 where
 fk_name_pers = id_person and id_sale = 6
 
+
