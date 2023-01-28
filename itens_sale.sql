@@ -23,9 +23,17 @@ from products, brands, sectors
 
 -- Select Vendas --
 select
-id_person, name_pers
+id_filial as filial,
+id_person as comprador, 
+name_pers as cliente, 
+cpf_pers as cpf, 
+address_pers as endereço,
+id_sale as NF_Venda,
+val_rec as SubTotal,
+disc_sale as desconto,
+total_sale as Total
 from
-persons, sales
+filiais, persons, sales
 where
-fk_name_pers = id_person and id_sale = 3
+fk_name_pers = id_person and id_sale = 6
 
