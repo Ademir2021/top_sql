@@ -21,8 +21,9 @@ name_brand as marca,
 name_sector as setor
 from products, brands, sectors
 
--- Select Vendas --
+-- Select Vendas por Cliente --
 select
+*,
 id_filial as filial,
 id_person as comprador, 
 name_pers as cliente, 
@@ -35,6 +36,6 @@ total_sale as Total
 from
 filiais, persons, sales
 where
-fk_name_pers = id_person and id_sale = 6
+fk_name_pers = id_person and id_sale = 2
 
 
