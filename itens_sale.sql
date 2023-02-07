@@ -39,3 +39,17 @@ where
 fk_name_pers = id_person and id_sale = 2
 
 
+-- testes --
+select
+s.id_sale as num_nota,
+s.fk_name_pers as cod_Cliente,
+p.name_pers as Cliente,
+i.amount_product as quant,
+i.val_product as Valor,
+i.total_product as Total_Item,
+s.val_rec as valor,
+s.disc_sale as desconto,
+s.total_sale as Total
+from sales as s, persons as p, itens_sale as i
+where id_sale = 2
+
