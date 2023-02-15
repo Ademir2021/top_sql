@@ -53,3 +53,11 @@ s.total_sale as Total
 from sales as s, persons as p, itens_sale as i
 where id_sale = 2
 
+--updates--
+UPDATE products
+SET bar_code = '123456'
+WHERE id_product = 4;
+
+--alter tables --
+ ALTER TABLE products ADD COLUMN  bar_code VARCHAR(200) NULL
+

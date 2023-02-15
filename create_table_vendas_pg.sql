@@ -60,9 +60,9 @@ CREATE TABLE
     id_sale serial NOT NULL,
     created_at timestamp without time zone NOT NULL DEFAULT now(),
     fk_name_pers serial,
-    val_rec numeric(11) NULL,
-    disc_sale numeric(11) NULL,
-    total_sale numeric(11) NULL,
+    val_rec NUMERIC(18,2) NULL,
+    disc_sale NUMERIC(18,2) NULL,
+    total_sale NUMERIC(18,2) NULL,
     FOREIGN KEY (fk_name_pers) REFERENCES persons(id_person) ON DELETE CASCADE
   );
 
@@ -77,6 +77,7 @@ CREATE TABLE
     id_product serial NOT NULL,
     created_at timestamp without time zone NOT NULL DEFAULT now(),
     descric_product VARCHAR(60) NULL,
+    bar_code VARCHAR(200) NULL,
     val_product NUMERIC(18,2) NULL,
     val_min_product NUMERIC(18,2) NULL,
     fk_brand integer,
