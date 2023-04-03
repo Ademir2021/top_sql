@@ -63,6 +63,7 @@ CREATE TABLE
     val_rec NUMERIC(18,2) NULL,
     disc_sale NUMERIC(18,2) NULL,
     total_sale NUMERIC(18,2) NULL,
+    fk_name_filial integer NOT NULL,
     FOREIGN KEY (fk_name_pers) REFERENCES persons(id_person) ON DELETE CASCADE
   );
 
