@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW itens_nota AS
 SELECT
 sales.id_sale AS "id_venda",
 sales.created_at AS "data_venda",
-filiais.nome_filial AS "filial",
+filiais.name_filial AS "filial",
 sales.val_rec,
 sales.disc_sale AS "desconto",
 sales.total_sale AS "total_venda",

@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW nota AS
 
 SELECT
 sales.id_sale AS "nota",
-filiais.nome_filial AS "filial",
+filiais.name_filial AS "filial",
 persons.name_pers AS "comprador",
 persons.cpf_pers AS "cpf",
 users.name AS "usuario",

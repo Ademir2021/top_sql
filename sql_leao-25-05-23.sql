@@ -25,3 +25,7 @@ UPDATE products SET val_min_product = 140 where id_product = 19
 
 UPDATE users SET name = 'Maria Luiza' WHERE id = 103
 
+/*Ajustar a sequencia chave primaria**/
+SELECT * FROM products_id_product_seq;
+ALTER SEQUENCE products_id_product_seq RESTART WITH 1;
+
