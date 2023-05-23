@@ -4,7 +4,7 @@ CREATE TABLE
 public.filiais ( 
 id_filial serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-name_filial character varying(60) NULL
+name_filial character varying(60) NOT NULL
 );
 ALTER TABLE
 public.filiais
@@ -43,9 +43,9 @@ CREATE TABLE
 public.persons ( 
 id_person serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-name_pers character varying(60) NULL,
-cpf_pers character varying(11) NULL,
-address_pers character varying(60) NULL,
+name_pers character varying(60) NOT NULL,
+cpf_pers character varying(11) NOT NULL,
+address_pers character varying(60) NOT NULL,
 fk_name_filial integer NOT NULL,
 FOREIGN KEY (fk_name_filial) REFERENCES filiais(id_filial) ON DELETE CASCADE
 );
@@ -60,8 +60,8 @@ CREATE TABLE
 public.sales ( 
 id_sale serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-fk_name_pers integer,
-val_rec NUMERIC(18,2) NULL,
+fk_name_pers integer NOT NULL,
+val_rec NUMERIC(18,2) NOT NULL,
 disc_sale NUMERIC(18,2) NULL,
 total_sale NUMERIC(18,2) NULL,
 fk_name_filial integer NOT NULL,
@@ -79,11 +79,11 @@ CREATE TABLE
 public.products ( 
 id_product serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-descric_product VARCHAR(60) NULL,
+descric_product VARCHAR(60) NOT NULL,
 val_max_product NUMERIC(18,2) NULL,
-val_min_product NUMERIC(18,2) NULL,
-fk_brand integer,
-fk_sector integer,
+val_min_product NUMERIC(18,2) NOT NULL,
+fk_brand integer NOT NULL,
+fk_sector integer NOT NULL,
 bar_code VARCHAR(200) NULL,
 FOREIGN KEY (fk_brand) REFERENCES brands(id_brand) ON DELETE CASCADE,
 FOREIGN KEY (fk_sector) REFERENCES sectors(id_sector) ON DELETE CASCADE
@@ -99,12 +99,12 @@ CREATE TABLE
 public.itens_sale ( 
 id_item_sequen serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-fk_sale INTEGER,
-fk_product INTEGER,
+fk_sale INTEGER NOT NULL,
+fk_product INTEGER NOT NULL,
 amount_product INTEGER,
 val_product NUMERIC(18,2),
 total_product NUMERIC(18,2),
--- FOREIGN KEY (fk_sale) REFERENCES sales(id_sale) ON DELETE CASCADE,
+FOREIGN KEY (fk_sale) REFERENCES sales(id_sale) ON DELETE CASCADE,
 FOREIGN KEY (fk_product) REFERENCES products(id_product) ON DELETE CASCADE
 );
 ALTER TABLE
@@ -118,9 +118,9 @@ CREATE TABLE
 public.users (
 id serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-name character varying(60) NULL,
-username character varying(60) NULL,
-password character varying(255) NULL
+name character varying(60) NOT NULL,
+username character varying(60) NOT NULL,
+password character varying(255) NOT NULL
 );
 ALTER TABLE
 public.users
