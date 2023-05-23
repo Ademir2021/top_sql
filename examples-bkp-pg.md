@@ -1,4 +1,4 @@
-# backup
+# backup para win10
 `sudo -u postgres pg_dump tigre > tigre.bkp`
 `sudo -u postgres pg_dump leao > leao.bkp`
 

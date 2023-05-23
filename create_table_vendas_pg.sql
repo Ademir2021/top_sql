@@ -60,7 +60,7 @@ CREATE TABLE
 public.sales ( 
 id_sale serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
-fk_name_pers serial,
+fk_name_pers integer,
 val_rec NUMERIC(18,2) NULL,
 disc_sale NUMERIC(18,2) NULL,
 total_sale NUMERIC(18,2) NULL,

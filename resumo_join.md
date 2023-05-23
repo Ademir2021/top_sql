@@ -1,5 +1,5 @@
 # Diferentes tipos de joins sql
-## Aqui estão os diferentes tipos de joins no sql
+# Aqui estão os diferentes tipos de joins no sql
 
 - (INNER JOIN) : Retorna registros que possuem valores correspondentes em ambas as tabelas.
 

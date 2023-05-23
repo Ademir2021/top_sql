@@ -28,6 +28,21 @@ INNER JOIN sectors ON (id_sector = fk_sector)
 
 AND id_sale = 27 
 
-/* usar o comando abaixo**/
+-- usar o comando abaixo
 SELECT *FROM
 nota_venda WHERE id_venda = 31
+
+-- outros examples
+SELECT
+id_item_sequen,
+fk_product AS id,
+descric_product AS Descrição,
+name_brand AS Marca,
+fk_sale AS Venda,
+amount_product AS Qtd,
+val_product,
+total_product
+FROM itens_sale
+RIGHT OUTER JOIN products ON (id_product = fk_product)
+RIGHT OUTER JOIN brands ON (id_brand = fk_brand)
+WHERE fk_sale = 1
