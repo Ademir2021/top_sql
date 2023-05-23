@@ -101,9 +101,9 @@ id_item_sequen serial NOT NULL,
 created_at timestamp without time zone NOT NULL DEFAULT now(),
 fk_sale INTEGER NOT NULL,
 fk_product INTEGER NOT NULL,
-amount_product INTEGER,
-val_product NUMERIC(18,2),
-total_product NUMERIC(18,2),
+amount_product INTEGER NOT NULL,
+val_product NUMERIC NOT NULL(18,2),
+total_product NUMERIC NOT NULL(18,2),
 FOREIGN KEY (fk_sale) REFERENCES sales(id_sale) ON DELETE CASCADE,
 FOREIGN KEY (fk_product) REFERENCES products(id_product) ON DELETE CASCADE
 );
