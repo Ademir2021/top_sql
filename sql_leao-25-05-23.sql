@@ -29,3 +29,6 @@ UPDATE users SET name = 'Maria Luiza' WHERE id = 103
 SELECT * FROM products_id_product_seq;
 ALTER SEQUENCE products_id_product_seq RESTART WITH 1;
 
+
+ALTER TABLE produtos ALTER COLUMN cod_prod SET NOT NULL;
+
