@@ -58,6 +58,9 @@ UPDATE products
 SET bar_code = '123456'
 WHERE id_product = 4;
 
---alter tables --
- ALTER TABLE products modify COLUMN  bar_code VARCHAR(200) NULL
+--alter tables oracle --
+ALTER TABLE products MODIFY COLUMN  bar_code VARCHAR(200) NULL 
+
+SELECT *FROM sales WHERE id_sale BETWEEN 1 AND  100
+
 
