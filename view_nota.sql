@@ -1,10 +1,11 @@
 CREATE OR REPLACE VIEW nota AS
-
 SELECT
 sales.id_sale AS "nota",
 filiais.name_filial AS "filial",
 persons.name_pers AS "comprador",
 persons.cpf_pers AS "cpf",
+persons.address_pers AS "endereco",
+persons.phone_pers AS "telefone",
 users.name AS "usuario",
 users.username AS "email",
 sales.created_at AS "emitida",

@@ -39,11 +39,11 @@ $BODY$
 BEGIN
 IF NEW.status = 'N' THEN
 UPDATE clientes SET saldodevedor = saldodevedor +
-(SELECT NEW.valor FROM contasreceber WHERE status = 'N' LIMIT 1);
+(SELECT NEW.valor FROM contasreceber LIMIT 1) WHERE NEW.idcliente = id;
 END IF;
-IF NEW.status = 'Y' THEN
+IF NEW.status = 'S' THEN
 UPDATE clientes SET saldodevedor = saldodevedor -
-(SELECT NEW.valor FROM contasreceber WHERE status = 'Y' LIMIT 1);
+(SELECT NEW.valor FROM contasreceber LIMIT 1) WHERE NEW.idcliente = id;
 END IF;
 RETURN NEW;
 END;
@@ -59,8 +59,8 @@ select *from clientes
 
 update clientes set saldodevedor = 0 where id = 1
 
-
-INSERT INTO contasreceber(idcliente, valor, status)VALUES(2, 4, 'N');
+INSERT INTO contasreceber(idcliente, valor, status)VALUES(1, 45.80, 'N');
+INSERT INTO contasreceber(idcliente, valor, status)VALUES(2, 36.76, 'N');
 
 INSERT INTO contasreceber VALUES (11, 1, 10, 'Y');
 
