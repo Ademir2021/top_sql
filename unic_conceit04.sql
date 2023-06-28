@@ -40,12 +40,9 @@ END;
 
 CREATE OR REPLACE PROCEDURE aumenta_sal (p_empno IN emp.empno%TYPE) IS
 BEGIN
-    UPDATE
-        scott.emp
-    SET
-        sal = sal * 1.10
-    WHERE
-        empno = p_empno
+    UPDATE scott.emp
+    SET sal = sal * 1.10
+    WHERE empno = p_empno
     END aumenta_sal;
     /
 
