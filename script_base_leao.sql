@@ -88,23 +88,23 @@ CREATE TABLE
     PRIMARY KEY(id_item_sequen, fk_sale)
   );
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
-FOREIGN KEY(fk_sale) REFERENCES sales(id_sale);
+FOREIGN KEY(fk_sale) REFERENCES sales(id_sale) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE itens_sale ADD CONSTRAINT product_fk_product
-FOREIGN KEY(fk_product) REFERENCES products(id_product);
+FOREIGN KEY(fk_product) REFERENCES products(id_product) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE sales ADD CONSTRAINT person_fk_name_pers
-FOREIGN KEY(fk_name_pers) REFERENCES persons(id_person);
+FOREIGN KEY(fk_name_pers) REFERENCES persons(id_person) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE sales ADD CONSTRAINT filial_fk_name_filial
-FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial);
+FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE sales ADD CONSTRAINT user_fk_name_user
-FOREIGN KEY(fk_name_user) REFERENCES users(id);
+FOREIGN KEY(fk_name_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE products ADD CONSTRAINT brand_fk_brand
-FOREIGN KEY(fk_brand) REFERENCES brands(id_brand);
+FOREIGN KEY(fk_brand) REFERENCES brands(id_brand) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE products ADD CONSTRAINT sector_fk_sector
-FOREIGN KEY(fk_sector) REFERENCES sectors(id_sector);
+FOREIGN KEY(fk_sector) REFERENCES sectors(id_sector) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE persons ADD CONSTRAINT person_fk_name_filial
-FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial);
+FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE persons ADD CONSTRAINT person_fk_id_user
-FOREIGN KEY(fk_id_user) REFERENCES users(id);
+FOREIGN KEY(fk_id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 CREATE OR REPLACE VIEW
   itens_nota AS
@@ -129,6 +129,12 @@ CREATE OR REPLACE VIEW
 SELECT
 sales.id_sale AS nota,
 filiais.name_filial AS filial,
+filiais.fantasia AS fantasia,
+filiais.address AS f_endereco,
+filiais.cnpj AS cnpj,
+filiais.inscric AS inscricao,
+filiais.phone AS f_telefone,
+filiais.email AS f_email,
 persons.name_pers AS comprador,
 persons.cpf_pers AS cpf,
 persons.address_pers AS endereco,
@@ -146,7 +152,7 @@ JOIN persons ON persons.id_person = sales.fk_name_pers
 JOIN users ON users.id = sales.fk_name_user;
 
 INSERT INTO brands(name_brand) VALUES ('Geral');
-INSERT INTO sectors(name_sector) VALUES ('gERAL');
+INSERT INTO sectors(name_sector) VALUES ('Geral');
 INSERT INTO filiais(
 name_filial,
 fantasia,
@@ -158,7 +164,7 @@ email
 )values(
 'Filial 01',
 'Centro Informatica',
-'Av, Cstro Alves, 1241',
+'Av, Castro Alves, 1241',
 '18069383000110',
 '84748484848',
 '44988521033',
