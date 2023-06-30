@@ -1,10 +1,17 @@
 # Docker com mysql
-
 `docker ps`
+`docker ps -a`
 `docker run`
 `docker inspect meu-mysql`
 `sudo docker images`
 `sudo docker images --all`
+
+# remover um container
+`docker rm  e infomre o ID ou nome `
+
+# Remover images
+`docker image rmi docker 2a530178815d`
+
 # localizar o host IP
 `sudo docker inspect meu-mysql | grep IPAddress`
 `sudo docker run mysql:5.7`

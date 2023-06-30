@@ -7,44 +7,44 @@
 -- AS unidades feitas em PL/SQL podem ser definidas em um ou mais blocos --
 
 DECLARE (Opcional)
-        Variaveis, cursores, execoes
+Variaveis, cursores, execoes
 BEGIN (Obrigatorio)
-    -Declarações SQL
-    -Declarações PL/SQL
+-Declarações SQL
+-Declarações PL/SQL
 EXCEPTION(Opcional)
-    Manusear acoes a serem tomadas quando ocorrerem erros
-    pré-definidos
+Manusear acoes a serem tomadas quando ocorrerem erros
+pré-definidos
 END; (Obrigatorio)
 
 DECLARE
-    X_nome Y,nome%TYPE;
+X_nome Y,nome%TYPE;
 BEGIN
-    SELECT nome INTO X_nome FROM Y WHERE nome = 123
-    ...
+SELECT nome INTO X_nome FROM Y WHERE nome = 123
+...
 END;
 
 CREATE [OR REPLACE] PROCEDURE nome_procedimento
-    [(parametro1) [modo] tipo1,
-        Parametro2 [modo2] tipo2,
-        ...) ]
-        IS | AS
-        PL/SQL Block ;
+        [(parametro1) [modo] tipo1,
+          Parametro2 [modo2] tipo2,
+                               ...)]
+IS | AS
+PL/SQL Block ;
 
 CREATE TABLE LOG_TABLE (USUARIO CHAR(20) NOT NULL,
-                    DATA DATE DEFAULT SYSDATE );
+DATA DATE DEFAULT SYSDATE );
 CREATE OR REPLACE PROCEDURE log_execution IS
 BEGIN
 INSERT INTO LOG_TABLE (USUARIO, DATA)
-            VALUES (USER, SYSDATE);
+VALUES (USER, SYSDATE);
 END;
 
 CREATE OR REPLACE PROCEDURE aumenta_sal (p_empno IN emp.empno%TYPE) IS
 BEGIN
-    UPDATE scott.emp
-    SET sal = sal * 1.10
-    WHERE empno = p_empno
-    END aumenta_sal;
-    /
+UPDATE scott.emp
+SET sal = sal * 1.10
+WHERE empno = p_empno
+END aumenta_sal;
+/
 
 EXECUTE aumenta_sal(7839);
 
