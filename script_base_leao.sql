@@ -184,3 +184,24 @@ phone_pers
 1,
 '44988521033'
 );
+
+CREATE OR REPLACE FUNCTION fc_sum_note()
+RETURNS TRIGGER AS
+$BODY$
+BEGIN
+UPDATE itens_sale
+SET total_product = val_product * amount_product
+WHERE fk_sale = NEW.fk_sale;
+UPDATE sales SET val_rec = ( SELECT SUM( total_product )
+FROM itens_sale WHERE fk_sale = NEW.fk_sale )
+WHERE id_sale = NEW.fk_sale;                          
+UPDATE sales
+SET total_sale = val_rec - disc_sale
+WHERE id_sale = NEW.fk_sale;
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_sum_note AFTER INSERT ON itens_sale
+FOR EACH ROW EXECUTE PROCEDURE fc_sum_note()
