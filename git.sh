@@ -1,4 +1,5 @@
 #bin/bash
+clear
 cd ../../Documentos/git/./git.sh
 echo "<< init >>"
 git add .
