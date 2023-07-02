@@ -1,6 +1,7 @@
 #bin/bash
 clear
-cd ../../Documentos/git/./git.sh
+# cd ../../Documentos/git/
+# ./git.sh
 echo "<< init >>"
 git add .
 git commit -m "stns"
