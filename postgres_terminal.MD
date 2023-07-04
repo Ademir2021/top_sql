@@ -20,3 +20,4 @@
 
 `CRTL -d`[Retorna ao usuário do sistema]
 
+\c
