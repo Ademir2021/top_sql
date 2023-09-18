@@ -1,4 +1,16 @@
 CREATE TABLE
+  contacts (
+    id SERIAL NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE NULL,
+    name VARCHAR(60) NOT NULL,
+    email VARCHAR(60) NOT NULL,
+    phone VARCHAR (11) NOT NULL,
+    comments VARCHAR(250) NOT NULL,
+    PRIMARY KEY (id)
+  );
+
+CREATE TABLE
   filiais (
     id_filial SERIAL NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
@@ -20,6 +32,7 @@ CREATE TABLE
     name VARCHAR(60) NOT NULL,
     username VARCHAR (60) UNIQUE NOT NULL,
     password VARCHAR (255) NOT NULL,
+    privilege VARCHAR (2) NOT NULL DEFAULT 2,
     PRIMARY KEY (id)
   );
   CREATE TABLE
