@@ -7,3 +7,8 @@
 `sudo -u postgres dropdb test`[apaga base]
 `sudo -u postgres createdb -O postgres test`[cria base]
 `sudo -u postgres pg_restore -d test < tigre.sql`[restore base]
+
+# bkp example BosoTreianmentos
+sudo -u postgres pg_dump test > db_test.bkp
+
+psql -h postgresql-143227-0.cloudclusters.net -p 19814 -U ademir -d test
