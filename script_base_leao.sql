@@ -32,7 +32,7 @@ CREATE TABLE
     name VARCHAR(60) NOT NULL,
     username VARCHAR (60) UNIQUE NOT NULL,
     password VARCHAR (255) NOT NULL,
-    privilege VARCHAR (2) NOT NULL DEFAULT 2,
+    privilege VARCHAR (2) NOT NULL DEFAULT 1,
     PRIMARY KEY (id)
   );
   CREATE TABLE
@@ -75,6 +75,7 @@ CREATE TABLE
     fk_brand INT NOT NULL,
     fk_sector INT NOT NULL,
     bar_code VARCHAR (200)NOT NULL,
+    images VARCHAR(60) NOT NULL,
     PRIMARY KEY (id_product)
   );
   CREATE TABLE
@@ -163,6 +164,8 @@ sales
 JOIN filiais ON filiais.id_filial = sales.fk_name_filial
 JOIN persons ON persons.id_person = sales.fk_name_pers
 JOIN users ON users.id = sales.fk_name_user;
+
+/* inserts **/
 
 INSERT INTO brands(name_brand) VALUES ('Geral');
 INSERT INTO sectors(name_sector) VALUES ('Geral');
