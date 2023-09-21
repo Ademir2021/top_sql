@@ -69,7 +69,7 @@ CREATE TABLE
     id_product SERIAL NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE NULL,
-    descric_product VARCHAR(60) NOT NULL,
+    descric_product VARCHAR(255) NOT NULL,
     val_max_product NUMERIC(18, 2) NOT NULL,
     val_min_product NUMERIC(18, 2) NOT NULL,
     fk_brand INT NOT NULL,

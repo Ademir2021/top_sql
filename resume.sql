@@ -1,5 +1,7 @@
 ALTER TABLE products ADD COLUMN  bar_code VARCHAR(200) NULL
 
+ALTER TABLE products ALTER COLUMN descric_product TYPE VARCHAR(255)
+
 DELETE FROM users WHERE name='Ademir';
 
 SELECT username FROM users WHERE username = 'centroserra@gmail.com' LIMIT(1)
