@@ -5,7 +5,7 @@ CREATE TABLE
     updated_at TIMESTAMP WITHOUT TIME ZONE NULL,
     name VARCHAR(60) NOT NULL,
     email VARCHAR(60) NOT NULL,
-    phone VARCHAR (11) NOT NULL,
+    phone VARCHAR (14) NOT NULL,
     comments VARCHAR(250) NOT NULL,
     PRIMARY KEY (id)
   );
@@ -59,16 +59,30 @@ CREATE TABLE
     name_pers VARCHAR(60) NOT NULL,
     cpf_pers VARCHAR(11) NOT NULL,
     address_pers VARCHAR(60) NOT NULL,
+    -- bairro_pers VARCHAR(60) NOT NULL,
+    -- fk_cep INT NOT NULL;
     fk_name_filial INT NOT NULL,
     fk_id_user INT NOT NULL,
     phone_pers VARCHAR(11) NOT NULL,
     PRIMARY KEY (id_person)
   );
-  CREATE TABLE
+
+  /**Alterações realizadas na tabela person em 11/01/2024 */
+  ALTER TABLE persons ADD COLUMN  bairro_pers VARCHAR(600)NOT NULL
+  ALTER TABLE persons ADD COLUMN fk_cep INT NOT NULL
+
+  ALTER TABLE ceps ADD PRIMARY KEY (id_cep);
+
+  ALTER TABLE persons ADD CONSTRAINT person_fk_cep
+  FOREIGN KEY(fk_cep) REFERENCES ceps(id_cep) ON UPDATE CASCADE;
+
+  ALTER TABLE persons ALTER COLUMN bairro_pers SET NOT NULL;
+  ALTER TABLE persons ALTER COLUMN fk_cep SET NOT NULL;
+
+
+CREATE TABLE
     products (
     id_product SERIAL NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE NULL,
     descric_product VARCHAR(255) NOT NULL,
     val_max_product NUMERIC(18, 2) NOT NULL,
     val_min_product NUMERIC(18, 2) NOT NULL,
@@ -101,6 +115,45 @@ CREATE TABLE
     total_product NUMERIC(18, 2) NOT NULL,
     PRIMARY KEY(id_item_sequen, fk_sale)
   );
+CREATE TABLE
+countries(
+  id_country SERIAL NOT NULL,
+  name_country VARCHAR (100) NOT NULL,
+  acronym VARCHAR(3) NULL,
+  ddi INT NOT NULL,
+  code_country NUMERIC(18,2) NOT NULL,
+  code_revenue INT NOT NULL,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  PRIMARY KEY(id_country)
+);
+CREATE TABLE
+cities(
+  id_city SERIAL NOT NULL,
+  name_city VARCHAR(60) NOT NULL,
+  uf CHAR(2) NOT NULL,
+  code_ibge VARCHAR(9) NOT NULL,
+  code_state_revenue INT NOT NULL,
+  code_country INT NOT NULL,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  code_federal_revenue NUMERIC(18,2) NOT NULL,
+  PRIMARY KEY(id_city)
+);
+CREATE TABLE
+ceps(
+  id_cep SERIAL NOT NULL,
+  num_cep VARCHAR(10) NOT NULL,
+  code_city INT NOT NULL,
+  type_cep VARCHAR(18) NOT NULL,
+  public_place VARCHAR(100) not null,
+  num_initial INT NOT NULL,
+  num_final INT NOT NULL,
+  complement VARCHAR(100),
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  city VARCHAR(60) NOT NULL,
+  uf CHAR(2) NOT NULL
+  --  PRIMARY KEY(id_city) 
+)
+
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
 FOREIGN KEY(fk_sale) REFERENCES sales(id_sale) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE itens_sale ADD CONSTRAINT product_fk_product
@@ -119,6 +172,14 @@ ALTER TABLE persons ADD CONSTRAINT person_fk_name_filial
 FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE persons ADD CONSTRAINT person_fk_id_user
 FOREIGN KEY(fk_id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE cities ADD CONSTRAINT country_code_country
+FOREIGN KEY(code_country) REFERENCES countries(id_country) ON UPDATE CASCADE
+
+ALTER TABLE ceps ADD CONSTRAINT ceps_code_city
+FOREIGN KEY(code_city) REFERENCES cities(id_city) ON UPDATE CASCADE
+
+
 
 CREATE OR REPLACE VIEW
   itens_nota AS
@@ -158,12 +219,17 @@ users.username AS email,
 sales.created_at AS emitida,
 sales.val_rec,
 sales.disc_sale AS desc_venda,
-sales.total_sale AS total_venda
+sales.total_sale AS total_venda,
+persons.bairro_pers AS bairro,
+ceps.num_cep AS cep,
+ceps.uf AS uf,
+ceps.city as municipio
 FROM
 sales
 JOIN filiais ON filiais.id_filial = sales.fk_name_filial
 JOIN persons ON persons.id_person = sales.fk_name_pers
-JOIN users ON users.id = sales.fk_name_user;
+JOIN users ON users.id = sales.fk_name_user
+JOIN ceps ON ceps.id_cep = persons.fk_cep;
 
 /* inserts **/
 

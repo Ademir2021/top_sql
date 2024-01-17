@@ -34,3 +34,5 @@ ALTER SEQUENCE products_id_product_seq RESTART WITH 1;
 
 ALTER TABLE produtos ALTER COLUMN cod_prod SET NOT NULL;
 
+ALTER TABLE ceps ADD PRIMARY KEY (id_cep);
+
