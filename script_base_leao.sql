@@ -73,6 +73,7 @@ CREATE TABLE
 
   ALTER TABLE ceps ADD PRIMARY KEY (id_cep);
 
+  -- ALTER TABLE persons DROP CONSTRAINT person_fk_cep; // remove CONSTRAINT
   ALTER TABLE persons ADD CONSTRAINT person_fk_cep
   FOREIGN KEY(fk_cep) REFERENCES ceps(id_cep) ON UPDATE CASCADE;
 
@@ -173,9 +174,11 @@ FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON D
 ALTER TABLE persons ADD CONSTRAINT person_fk_id_user
 FOREIGN KEY(fk_id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+-- ALTER TABLE cities DROP CONSTRAINT country_code_country; // remove CONSTRAINT 
 ALTER TABLE cities ADD CONSTRAINT country_code_country
 FOREIGN KEY(code_country) REFERENCES countries(id_country) ON UPDATE CASCADE
 
+-- ALTER TABLE ceps DROP CONSTRAINT ceps_code_city; // remove CONSTRAINT
 ALTER TABLE ceps ADD CONSTRAINT ceps_code_city
 FOREIGN KEY(code_city) REFERENCES cities(id_city) ON UPDATE CASCADE
 
