@@ -35,6 +35,20 @@ CREATE TABLE
     privilege VARCHAR (2) NOT NULL DEFAULT 1,
     PRIMARY KEY (id)
   );
+
+  CREATE TABLE
+  refresh_token(
+    id SERIAL NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+    expires_in INT,
+    user_ INT,
+    user_id VARCHAR(60),
+    PRIMARY KEY(id)
+  )
+
+  ALTER TABLE refresh_token ADD CONSTRAINT refresh_token_user
+  FOREIGN KEY(user_) REFERENCES users(id)
+
   CREATE TABLE
     brands (
     id_brand SERIAL NOT NULL,
@@ -181,7 +195,6 @@ FOREIGN KEY(code_country) REFERENCES countries(id_country) ON UPDATE CASCADE
 -- ALTER TABLE ceps DROP CONSTRAINT ceps_code_city; // remove CONSTRAINT
 ALTER TABLE ceps ADD CONSTRAINT ceps_code_city
 FOREIGN KEY(code_city) REFERENCES cities(id_city) ON UPDATE CASCADE
-
 
 
 CREATE OR REPLACE VIEW
