@@ -75,6 +75,7 @@ CREATE TABLE
     address_pers VARCHAR(60) NOT NULL,
     -- bairro_pers VARCHAR(60) NOT NULL,
     -- fk_cep INT NOT NULL;
+    -- num_address VARCHAR(6) NOT NULL
     fk_name_filial INT NOT NULL,
     fk_id_user INT NOT NULL,
     phone_pers VARCHAR(11) NOT NULL,
@@ -84,6 +85,8 @@ CREATE TABLE
   /**Alterações realizadas na tabela person em 11/01/2024 */
   ALTER TABLE persons ADD COLUMN  bairro_pers VARCHAR(600)NOT NULL
   ALTER TABLE persons ADD COLUMN fk_cep INT NOT NULL
+  /**Incluido na tabela person um campo num_address em 04/07/2024 */
+  ALTER TABLE persons ADD COLUMN num_address VARCHAR(6) NOT 
 
   ALTER TABLE ceps ADD PRIMARY KEY (id_cep);
 
