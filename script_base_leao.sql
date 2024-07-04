@@ -85,7 +85,7 @@ CREATE TABLE
   /**Alterações realizadas na tabela person em 11/01/2024 */
   ALTER TABLE persons ADD COLUMN  bairro_pers VARCHAR(600)NOT NULL
   ALTER TABLE persons ADD COLUMN fk_cep INT NOT NULL
-  /**Incluido na tabela person um campo num_address em 04/07/2024 */
+  /**Incluido na tabela person o campo num_address em 04/07/2024 */
   ALTER TABLE persons ADD COLUMN num_address VARCHAR(6) NOT 
 
   ALTER TABLE ceps ADD PRIMARY KEY (id_cep);
@@ -232,6 +232,7 @@ filiais.email AS f_email,
 persons.name_pers AS comprador,
 persons.cpf_pers AS cpf,
 persons.address_pers AS endereco,
+persons.num_address AS num_endereco,
 persons.phone_pers AS telefone,
 users.name AS usuario,
 users.username AS email,
