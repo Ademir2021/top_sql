@@ -170,6 +170,53 @@ ceps(
   city VARCHAR(60) NOT NULL,
   uf CHAR(2) NOT NULL
   --  PRIMARY KEY(id_city) 
+);
+
+/*
+* Fiscal
+*/
+CREATE TABLE
+table_trib(
+  id_table_trib SERIAL NOT NULL,
+  name_table VARCHAR(50) NOT NULL,
+  icms_trib INT NOT NULL,
+  icms_base NUMERIC(18.4) NOT NULL,
+  icms_aliq NUMERIC(18.4) NOT NULL,
+  icms_obs VARCHAR(50) NULL,
+  iss_base NUMERIC(18.4) NOT NULL,
+  iss_aliq NUMERIC(18.4) NOT NULL,
+  sf_base NUMERIC(18.4) NOT NULL,
+  sf_aliq NUMERIC(18.4) NOT NULL,
+  ir_base NUMERIC(18.4) NOT NULL,
+  ir_aliq NUMERIC(18.4) NOT NULL,
+  cs_base NUMERIC(18.4) NOT NULL,
+  cs_aliq NUMERIC(18.4) NOT NULL,
+  pis_base NUMERIC(18.4) NOT NULL,
+  pis_aliq NUMERIC(18.4) NOT NULL,
+  cofins_base NUMERIC(18.4) NOT NULL,
+  cofins_aliq NUMERIC(18.4) NOT NULL,
+  ipi_aliq NUMERIC(18.4) NOT NULL,
+  cst_pis INT NOT NULL,
+  cst_cofins INT NOT NULL,
+  cst_ipi INT NOT NULL,
+  icms_st_tributado NUMERIC(18.4) NOT NULL,
+  icms_aliq_st NUMERIC(18.4) NOT NULL,
+  icms_margem_st NUMERIC(18.4) NOT NULL,
+  icms_usa_margem_st NUMERIC(18.4) NOT NULL
+  icms_mod_bc INTEGER NOT NULL,
+  st_mod_bc INTEGER NOT NULL,
+  icms_diferido NUMERIC(18.4) NOT NULL,
+  csocn INTEGER NOT NULL,
+  cod_trib_issqn CHAR(1) NOT NULL,
+  cst_issqn_pref INTEGER NOT NULL,
+  ipi_unit CHAR(1) NOT NULL,
+  icms_aliq_uf_dest NUMERIC(18.4) NOT NULL,
+  icms_aliq_interestadual NUMERIC(18.4) NOT NULL,
+  fcp_uf_dest_perc NUMERIC(18.4) NOT NULL,
+  fcp_uf_dest_base NUMERIC(18.4) NOT NULL,
+  fcp_uf_dest_base_st NUMERIC(18.4) NOT NULL,
+
+  PRIMARY KEY(id_table_trib)
 )
 
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale

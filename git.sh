@@ -2,6 +2,6 @@
 clear
 echo "<< init >>"
 git add .
-git commit -m "add fields num_endereco from view nota"
+git commit -m "setings - ?"
 git push -u origin master
 echo "<< end >>"
