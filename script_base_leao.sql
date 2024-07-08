@@ -179,45 +179,61 @@ CREATE TABLE
 table_trib(
   id_table_trib SERIAL NOT NULL,
   name_table VARCHAR(50) NOT NULL,
-  icms_trib INT NOT NULL,
-  icms_base NUMERIC(18.4) NOT NULL,
-  icms_aliq NUMERIC(18.4) NOT NULL,
+  icms_trib INT NOT NULL DEFAULT 90,
+  icms_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  icms_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
   icms_obs VARCHAR(50) NULL,
-  iss_base NUMERIC(18.4) NOT NULL,
-  iss_aliq NUMERIC(18.4) NOT NULL,
-  sf_base NUMERIC(18.4) NOT NULL,
-  sf_aliq NUMERIC(18.4) NOT NULL,
-  ir_base NUMERIC(18.4) NOT NULL,
-  ir_aliq NUMERIC(18.4) NOT NULL,
-  cs_base NUMERIC(18.4) NOT NULL,
-  cs_aliq NUMERIC(18.4) NOT NULL,
-  pis_base NUMERIC(18.4) NOT NULL,
-  pis_aliq NUMERIC(18.4) NOT NULL,
-  cofins_base NUMERIC(18.4) NOT NULL,
-  cofins_aliq NUMERIC(18.4) NOT NULL,
-  ipi_aliq NUMERIC(18.4) NOT NULL,
-  cst_pis INT NOT NULL,
-  cst_cofins INT NOT NULL,
-  cst_ipi INT NOT NULL,
-  icms_st_tributado NUMERIC(18.4) NOT NULL,
-  icms_aliq_st NUMERIC(18.4) NOT NULL,
-  icms_margem_st NUMERIC(18.4) NOT NULL,
-  icms_usa_margem_st NUMERIC(18.4) NOT NULL
-  icms_mod_bc INTEGER NOT NULL,
-  st_mod_bc INTEGER NOT NULL,
-  icms_diferido NUMERIC(18.4) NOT NULL,
-  csocn INTEGER NOT NULL,
-  cod_trib_issqn CHAR(1) NOT NULL,
-  cst_issqn_pref INTEGER NOT NULL,
-  ipi_unit CHAR(1) NOT NULL,
-  icms_aliq_uf_dest NUMERIC(18.4) NOT NULL,
-  icms_aliq_interestadual NUMERIC(18.4) NOT NULL,
-  fcp_uf_dest_perc NUMERIC(18.4) NOT NULL,
-  fcp_uf_dest_base NUMERIC(18.4) NOT NULL,
-  fcp_uf_dest_base_st NUMERIC(18.4) NOT NULL,
-
+  iss_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  iss_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  sf_base NUMERIC(18,4) NOT NULL DEFAULT 100.0000,
+  sf_aliq NUMERIC(18,4) NOT NULL DEFAULT 5.4000,
+  ir_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  ir_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  cs_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  cs_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  pis_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  pis_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  cofins_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  cofins_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  ipi_aliq NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  cst_pis INT NOT NULL DEFAULT 99,
+  cst_cofins INT NOT NULL DEFAULT 99,
+  cst_ipi INT NOT NULL DEFAULT 99,
+  icms_st_tributado NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  icms_aliq_st NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  icms_margem_st NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  icms_usa_margem_st CHAR(1) NOT NULL DEFAULT 'N',
+  icms_mod_bc INTEGER NOT NULL DEFAULT 3,
+  st_mod_bc INTEGER NOT NULL DEFAULT 4,
+  icms_diferido NUMERIC(18,4) NOT NULL DEFAULT 0.000,
+  csocn INTEGER NOT NULL DEFAULT 102,
+  cod_trib_issqn CHAR(1) NOT NULL DEFAULT 1,
+  cst_issqn_pref INTEGER NOT NULL DEFAULT 0,
+  ipi_unit CHAR(1) NOT NULL DEFAULT 'N',
+  icms_aliq_uf_dest NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  icms_aliq_interestadual NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  fcp_uf_dest_perc NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  fcp_uf_dest_base NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  fcp_uf_dest_base_st NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  fcp_uf_dest_perc_st NUMERIC(18,4) NOT NULL DEFAULT 0.0000,
+  cod_benef_fiscal INTEGER NOT NULL DEFAULT 1,
+  natureza_receita_pis_cofins INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY(id_table_trib)
-)
+);
+INSERT INTO table_trib(name_table) VALUES ('Tribuacao de Mercadorias Normal');
+INSERT INTO table_trib(name_table) VALUES ('Tribuacao de Mercadorias Por ST');
+INSERT INTO table_trib(name_table) VALUES ('Tribuacao de Servicos');
+
+CREATE TABLE
+grupos_fiscais(
+  id_grupo_fiscal SERIAL NOT NULL,
+  name_grupo_fiscal VARCHAR(50) NOT NULL,
+  fk_tabela_trib INTEGER NOT NULL,
+  PRIMARY KEY(id_grupo_fiscal)
+);
+INSERT INTO grupos_fiscais(name_grupo_fiscal, fk_tabela_trib) VALUES ('Mercadorias Tributadas normalmente',1);
+INSERT INTO grupos_fiscais(name_grupo_fiscal, fk_tabela_trib) VALUES ('Mercadorias Trib. por Substituicao Tributaria',2);
+INSERT INTO grupos_fiscais(name_grupo_fiscal, fk_tabela_trib) VALUES ('Servicos Tributado pelo ISS',3);
 
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
 FOREIGN KEY(fk_sale) REFERENCES sales(id_sale) ON UPDATE CASCADE ON DELETE CASCADE;
@@ -237,6 +253,8 @@ ALTER TABLE persons ADD CONSTRAINT person_fk_name_filial
 FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE persons ADD CONSTRAINT person_fk_id_user
 FOREIGN KEY(fk_id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE grupos_fiscais ADD CONSTRAINT table_trib_fk_tabela_trib
+FOREIGN KEY(fk_tabela_trib) REFERENCES table_trib(id_table_trib) ON UPDATE CASCADE
 
 -- ALTER TABLE cities DROP CONSTRAINT country_code_country; // remove CONSTRAINT 
 ALTER TABLE cities ADD CONSTRAINT country_code_country
