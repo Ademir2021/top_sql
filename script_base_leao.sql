@@ -110,6 +110,15 @@ CREATE TABLE
     images VARCHAR(60) NOT NULL,
     PRIMARY KEY (id_product)
   );
+
+  /**Alterações realizadas na tabela person em 08/07/2024 */
+  ALTER TABLE products ADD COLUMN  ncm VARCHAR(8)NOT NULL DEFAULT '00000000';
+  ALTER TABLE products ADD COLUMN fk_un_med INT NOT NULL DEFAULT 1;
+  ALTER TABLE products ADD COLUMN fk_classe INT NOT NULL DEFAULT 1;
+  ALTER TABLE products ADD COLUMN fk_grupo_fiscal INT NOT NULL DEFAULT 1;
+  ALTER TABLE products ADD COLUMN fk_tipo_prod INT NOT NULL DEFAULT 1;
+
+
   CREATE TABLE
     sales (
     id_sale SERIAL NOT NULL,
@@ -241,7 +250,34 @@ un_meds(
   un_med VARCHAR(10),
   PRIMARY KEY(id_un)
 );
-INSERT INTO un_meds (un_med) values ('UN')
+INSERT INTO un_meds (un_med) values ('UN');
+
+CREATE TABLE
+classes_prods(
+  id_classe SERIAL NOT NULL,
+  name_classe VARCHAR(15) NOT NULL,
+  PRIMARY KEY(id_classe)
+);
+INSERT INTO classes_prods(name_classe) VALUES ('Sem Classe');
+
+CREATE TABLE
+tipos_prods(
+  id_tipo SERIAL NOT NULL,
+  name_tipo VARCHAR(30) NOT NULL,
+  PRIMARY KEY(id_tipo)
+);
+INSERT INTO tipos_prods(name_tipo) VALUES ('00 - Mercadoria para Revenda');
+INSERT INTO tipos_prods(name_tipo) VALUES ('01 - Materia Prima');
+INSERT INTO tipos_prods(name_tipo) VALUES ('02 - Embalagem');
+INSERT INTO tipos_prods(name_tipo) VALUES ('03 - Produto em Processo');
+INSERT INTO tipos_prods(name_tipo) VALUES ('04 - Produto Acabado');
+INSERT INTO tipos_prods(name_tipo) VALUES ('05 - SubProduto');
+INSERT INTO tipos_prods(name_tipo) VALUES ('06 - Produto Intermediario');
+INSERT INTO tipos_prods(name_tipo) VALUES ('07 - Material de Uso e Consumo');
+INSERT INTO tipos_prods(name_tipo) VALUES ('08 - Ativo Imobilizado');
+INSERT INTO tipos_prods(name_tipo) VALUES ('09 - Servicos');
+INSERT INTO tipos_prods(name_tipo) VALUES ('10 - Outros Insumos');
+INSERT INTO tipos_prods(name_tipo) VALUES ('99 - Outras');
 
 
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
@@ -258,6 +294,16 @@ ALTER TABLE products ADD CONSTRAINT brand_fk_brand
 FOREIGN KEY(fk_brand) REFERENCES brands(id_brand) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE products ADD CONSTRAINT sector_fk_sector
 FOREIGN KEY(fk_sector) REFERENCES sectors(id_sector) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE products ADD CONSTRAINT un_med_fk_un_med /* create 08/07/2024*/
+FOREIGN KEY(fk_un_med) REFERENCES un_meds(id_un) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE products ADD CONSTRAINT grupos_fiscais_fk_grupo_fiscal /* create 08/07/2024*/
+FOREIGN KEY(fk_grupo_fiscal) REFERENCES grupos_fiscais(id_grupo_fiscal) ON UPDATE CASCADE;
+ALTER TABLE products ADD CONSTRAINT classes_prods_fk_classe /* create 08/07/2024*/
+FOREIGN KEY(fk_classe) REFERENCES classes_prods(id_classe) ON UPDATE CASCADE;
+ALTER TABLE products ADD CONSTRAINT tipos_prods_fk_tipo_prod /* create 08/07/2024*/
+FOREIGN KEY(fk_tipo_prod) REFERENCES tipos_prods(id_tipo) ON UPDATE CASCADE;
+
 ALTER TABLE persons ADD CONSTRAINT person_fk_name_filial
 FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE persons ADD CONSTRAINT person_fk_id_user
