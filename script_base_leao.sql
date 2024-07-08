@@ -235,6 +235,15 @@ INSERT INTO grupos_fiscais(name_grupo_fiscal, fk_tabela_trib) VALUES ('Mercadori
 INSERT INTO grupos_fiscais(name_grupo_fiscal, fk_tabela_trib) VALUES ('Mercadorias Trib. por Substituicao Tributaria',2);
 INSERT INTO grupos_fiscais(name_grupo_fiscal, fk_tabela_trib) VALUES ('Servicos Tributado pelo ISS',3);
 
+CREATE TABLE
+un_meds(
+  id_un SERIAL NOT NULL,
+  un_med VARCHAR(10),
+  PRIMARY KEY(id_un)
+);
+INSERT INTO un_meds (un_med) values ('UN')
+
+
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
 FOREIGN KEY(fk_sale) REFERENCES sales(id_sale) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE itens_sale ADD CONSTRAINT product_fk_product
