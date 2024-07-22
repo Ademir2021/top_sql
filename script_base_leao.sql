@@ -300,8 +300,8 @@ contas_receber(
   emissao TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   vencimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   saldo NUMERIC(18,4) NOT NULL,
-  pagamento NUMERIC(18,4) NULL,
-  recebimento NUMERIC(18,4) NOT NULL
+  pagamento TIMESTAMP WITHOUT TIME ZONE NULL,
+  recebimento NUMERIC(18,4) NOT NULL,
   PRIMARY KEY (id_conta)
 )
 
