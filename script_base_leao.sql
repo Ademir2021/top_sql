@@ -251,6 +251,9 @@ un_meds(
   PRIMARY KEY(id_un)
 );
 INSERT INTO un_meds (un_med) values ('UN');
+INSERT INTO un_meds (un_med) values ('PC');
+INSERT INTO un_meds (un_med) values ('KIT');
+INSERT INTO un_meds (un_med) values ('PCT');
 
 CREATE TABLE
 classes_prods(
@@ -259,6 +262,9 @@ classes_prods(
   PRIMARY KEY(id_classe)
 );
 INSERT INTO classes_prods(name_classe) VALUES ('Sem Classe');
+INSERT INTO classes_prods(name_classe) VALUES ('Informatica');
+INSERT INTO classes_prods(name_classe) VALUES ('Celulares');
+INSERT INTO classes_prods(name_classe) VALUES ('Telecom');
 
 CREATE TABLE
 tipos_prods(
@@ -278,6 +284,33 @@ INSERT INTO tipos_prods(name_tipo) VALUES ('08 - Ativo Imobilizado');
 INSERT INTO tipos_prods(name_tipo) VALUES ('09 - Servicos');
 INSERT INTO tipos_prods(name_tipo) VALUES ('10 - Outros Insumos');
 INSERT INTO tipos_prods(name_tipo) VALUES ('99 - Outras');
+
+CREATE TABLE
+contas_receber(
+  id_conta SERIAL NOT NULL,
+  fk_filial INTEGER NOT NULL,
+  tipo VARCHAR(10) NOT NULL,
+  fk_venda INTEGER NOT NULL,
+  fk_user INTEGER NOT NULL,
+  parcela VARCHAR(5) NOT NULL,
+  valor NUMERIC(18,4) NOT NULL,
+  multa NUMERIC(18,4) NOT NULL,
+  juros NUMERIC(18,4) NOT NULL,
+  desconto NUMERIC(18,4) NOT NULL,
+  emissao TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  vencimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  saldo NUMERIC(18,4) NOT NULL,
+  pagamento NUMERIC(18,4) NULL,
+  recebimento NUMERIC(18,4) NOT NULL
+  PRIMARY KEY (id_conta)
+)
+
+ALTER TABLE contas_receber ADD CONSTRAINT filial_fk_filial /* create 21/08/2024 */
+FOREIGN key (fk_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE;
+ALTER TABLE contas_receber ADD CONSTRAINT sale_fk_venda
+FOREIGN key (fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
+ALTER TABLE contas_receber ADD CONSTRAINT user_fk_user
+FOREIGN key (fk_user) REFERENCES users(id) ON UPDATE CASCADE;
 
 
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
