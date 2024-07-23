@@ -305,12 +305,16 @@ contas_receber(
   PRIMARY KEY (id_conta)
 )
 
-ALTER TABLE contas_receber ADD CONSTRAINT filial_fk_filial /* create 21/08/2024 */
-FOREIGN key (fk_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE;
-ALTER TABLE contas_receber ADD CONSTRAINT sale_fk_venda
-FOREIGN key (fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
-ALTER TABLE contas_receber ADD CONSTRAINT user_fk_user
-FOREIGN key (fk_user) REFERENCES users(id) ON UPDATE CASCADE;
+CREATE TABLE vals_recebidos(
+  id_val SERIAL NOT NULL,
+  fk_conta INTEGER NOT NULL,
+  fk_venda INTEGER NOT NULL,
+  fk_user INTEGER NOT NULL,
+  valor NUMERIC(18,4),
+  data_recebimento TIMESTAMP WITHOUT TIME ZONE NULL,
+  PRIMARY KEY(id_val)
+)
+
 
 
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
@@ -343,6 +347,13 @@ ALTER TABLE persons ADD CONSTRAINT person_fk_id_user
 FOREIGN KEY(fk_id_user) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE grupos_fiscais ADD CONSTRAINT table_trib_fk_tabela_trib
 FOREIGN KEY(fk_tabela_trib) REFERENCES table_trib(id_table_trib) ON UPDATE CASCADE
+
+ALTER TABLE contas_receber ADD CONSTRAINT filial_fk_filial /* create 21/08/2024 */
+FOREIGN key (fk_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE;
+ALTER TABLE contas_receber ADD CONSTRAINT sale_fk_venda
+FOREIGN key (fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
+ALTER TABLE contas_receber ADD CONSTRAINT user_fk_user
+FOREIGN key (fk_user) REFERENCES users(id) ON UPDATE CASCADE;
 
 -- ALTER TABLE cities DROP CONSTRAINT country_code_country; // remove CONSTRAINT 
 ALTER TABLE cities ADD CONSTRAINT country_code_country
