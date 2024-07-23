@@ -310,12 +310,17 @@ CREATE TABLE vals_recebidos(
   fk_conta INTEGER NOT NULL,
   fk_venda INTEGER NOT NULL,
   fk_user INTEGER NOT NULL,
-  valor NUMERIC(18,4),
-  data_recebimento TIMESTAMP WITHOUT TIME ZONE NULL,
+  valor NUMERIC(18,4) NOT NULL,
+  data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   PRIMARY KEY(id_val)
 )
 
-
+ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
+FOREIGN KEY(fk_conta) REFERENCES contas_receber(id_conta) ON UPDATE CASCADE;
+ALTER TABLE vals_recebidos ADD CONSTRAINT sale_val_rec_fk_sale
+FOREIGN KEY(fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
+ALTER TABLE vals_recebidos ADD CONSTRAINT user_val_rec_fk_user
+FOREIGN KEY(fk_user) REFERENCES users(id) ON UPDATE CASCADE;
 
 ALTER TABLE itens_sale ADD CONSTRAINT sale_fk_sale
 FOREIGN KEY(fk_sale) REFERENCES sales(id_sale) ON UPDATE CASCADE ON DELETE CASCADE;
