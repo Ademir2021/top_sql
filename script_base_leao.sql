@@ -290,7 +290,7 @@ contas_receber(
   id_conta SERIAL NOT NULL,
   fk_filial INTEGER NOT NULL,
   tipo VARCHAR(10) NOT NULL,
-  fk_venda INTEGER NOT NULL,
+  fk_venda INTEGER NULL,
   fk_user INTEGER NOT NULL,
   parcela VARCHAR(5) NOT NULL,
   valor NUMERIC(18,4) NOT NULL,
@@ -302,8 +302,17 @@ contas_receber(
   saldo NUMERIC(18,4) NOT NULL,
   pagamento TIMESTAMP WITHOUT TIME ZONE NULL,
   recebimento NUMERIC(18,4) NOT NULL,
+  -- observacao VARCHAR(100) NULL,
+  -- fk_pagador INTEGER NOT NULL
   PRIMARY KEY (id_conta)
 )
+
+/**Alterações feitas na tabela contas_receber no dia 31/07/24 */
+  ALTER TABLE contas_receber ADD COLUMN observacao VARCHAR(100)NULL;
+  ALTER TABLE contas_receber ADD COLUMN fk_pagador INTEGER NOT NULL;
+  ALTER TABLE contas_receber ADD CONSTRAINT person_fk_pagador
+  FOREIGN key (fk_pagador) REFERENCES persons(id_person) ON UPDATE CASCADE;
+
 
 CREATE TABLE vals_recebidos(
   id_val SERIAL NOT NULL,
@@ -355,8 +364,10 @@ FOREIGN KEY(fk_tabela_trib) REFERENCES table_trib(id_table_trib) ON UPDATE CASCA
 
 ALTER TABLE contas_receber ADD CONSTRAINT filial_fk_filial /* create 21/08/2024 */
 FOREIGN key (fk_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE;
+
 ALTER TABLE contas_receber ADD CONSTRAINT sale_fk_venda
 FOREIGN key (fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
+
 ALTER TABLE contas_receber ADD CONSTRAINT user_fk_user
 FOREIGN key (fk_user) REFERENCES users(id) ON UPDATE CASCADE;
 
