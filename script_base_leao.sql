@@ -323,6 +323,8 @@ CREATE TABLE vals_recebidos(
   data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   PRIMARY KEY(id_val)
 )
+  ALTER TABLE vals_recebidos ADD COLUMN descricao VARCHAR(50)NULL;
+  ALTER TABLE vals_recebidos ADD COLUMN fk_person INTEGER NULL;
 
 ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
 FOREIGN KEY(fk_conta) REFERENCES contas_receber(id_conta) ON UPDATE CASCADE;
