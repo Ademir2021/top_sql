@@ -329,9 +329,9 @@ CREATE TABLE vals_recebidos(
   CREATE TABLE caixa_mov( -- create in 03/08/2024
     id_caixa SERIAL NOT NULL,
     fk_val  INTEGER NOT NULL,
-    data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    debito NUMERIC(18,4) NOT NULL,
-    credito NUMERIC(18,4) NOT NULL,
+    data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+    debito NUMERIC(18,4) NULL,
+    credito NUMERIC(18,4) NULL,
     saldo NUMERIC(18,4) NOT NULL,
     PRIMARY KEY(id_caixa)
   )
@@ -501,3 +501,15 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_sum_note AFTER INSERT ON itens_sale
 FOR EACH ROW EXECUTE PROCEDURE fc_sum_note()
+
+CREATE OR REPLACE FUNCTION fc_credito_cx()
+RETURNS TRIGGER AS
+$BODY
+INSERT INTO caixa_mov () VALUES ()
+RETURN NEW;
+END;
+$BODY
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_credito_cx AFTER INSERT ON vals_recebidos
+FOR EACH ROW EXECUTE fc_credito_cx()
