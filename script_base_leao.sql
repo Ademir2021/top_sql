@@ -118,7 +118,6 @@ CREATE TABLE
   ALTER TABLE products ADD COLUMN fk_grupo_fiscal INT NOT NULL DEFAULT 1;
   ALTER TABLE products ADD COLUMN fk_tipo_prod INT NOT NULL DEFAULT 1;
 
-
   CREATE TABLE
     sales (
     id_sale SERIAL NOT NULL,
@@ -181,9 +180,7 @@ ceps(
   --  PRIMARY KEY(id_city) 
 );
 
-/*
-* Fiscal
-*/
+/** Fiscal */
 CREATE TABLE
 table_trib(
   id_table_trib SERIAL NOT NULL,
@@ -321,15 +318,30 @@ CREATE TABLE vals_recebidos(
   fk_user INTEGER NOT NULL,
   valor NUMERIC(18,4) NOT NULL,
   data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  -- descricao VARCHAR(50) NULL
+  -- fk_person INTEGER NULL 
   PRIMARY KEY(id_val)
 )
+  -- create in 02/08/2024
   ALTER TABLE vals_recebidos ADD COLUMN descricao VARCHAR(50)NULL;
   ALTER TABLE vals_recebidos ADD COLUMN fk_person INTEGER NULL;
 
-ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
-FOREIGN KEY(fk_conta) REFERENCES contas_receber(id_conta) ON UPDATE CASCADE;
-ALTER TABLE vals_recebidos ADD CONSTRAINT sale_val_rec_fk_sale
-FOREIGN KEY(fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
+  CREATE TABLE caixa_mov( -- create in 03/08/2024
+    id_caixa SERIAL NOT NULL,
+    fk_val  INTEGER NOT NULL,
+    data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    debito NUMERIC(18,4) NOT NULL,
+    credito NUMERIC(18,4) NOT NULL,
+    saldo NUMERIC(18,4) NOT NULL,
+    PRIMARY KEY(id_caixa)
+  )
+ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val
+FOREIGN KEY(fk_val) REFERENCES vals_recebidos(id_val) ON UPDATE CASCADE;
+
+-- ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
+-- FOREIGN KEY(fk_conta) REFERENCES contas_receber(id_conta) ON UPDATE CASCADE; //removido
+-- ALTER TABLE vals_recebidos ADD CONSTRAINT sale_val_rec_fk_sale
+-- FOREIGN KEY(fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE; //removido
 ALTER TABLE vals_recebidos ADD CONSTRAINT user_val_rec_fk_user
 FOREIGN KEY(fk_user) REFERENCES users(id) ON UPDATE CASCADE;
 
@@ -367,8 +379,8 @@ FOREIGN KEY(fk_tabela_trib) REFERENCES table_trib(id_table_trib) ON UPDATE CASCA
 ALTER TABLE contas_receber ADD CONSTRAINT filial_fk_filial /* create 21/08/2024 */
 FOREIGN key (fk_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE;
 
-ALTER TABLE contas_receber ADD CONSTRAINT sale_fk_venda
-FOREIGN key (fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE;
+-- ALTER TABLE contas_receber ADD CONSTRAINT sale_fk_venda
+-- FOREIGN key (fk_venda) REFERENCES sales(id_sale) ON UPDATE CASCADE; //removido
 
 ALTER TABLE contas_receber ADD CONSTRAINT user_fk_user
 FOREIGN key (fk_user) REFERENCES users(id) ON UPDATE CASCADE;
