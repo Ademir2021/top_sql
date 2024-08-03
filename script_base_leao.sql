@@ -335,6 +335,7 @@ CREATE TABLE vals_recebidos(
     saldo NUMERIC(18,4) NOT NULL,
     PRIMARY KEY(id_caixa)
   )
+insert into caixa_mov (fk_val, credito,saldo)values(1,0,0)
 ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val
 FOREIGN KEY(fk_val) REFERENCES vals_recebidos(id_val) ON UPDATE CASCADE;
 
@@ -505,12 +506,14 @@ FOR EACH ROW EXECUTE PROCEDURE fc_sum_note()
 -- Trigger para creditar valor no caixa
 CREATE OR REPLACE FUNCTION fc_credito_cx()
 RETURNS TRIGGER AS
-$BODY
-INSERT INTO caixa_mov () VALUES ()
+$BODY$
+BEGIN
+INSERT INTO caixa_mov (fk_val, credito, saldo)
+VALUES (new.id_val, new.valor, new.valor + (SELECT MAX(saldo) FROM caixa_mov));
 RETURN NEW;
 END;
-$BODY
+$BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_credito_cx AFTER INSERT ON vals_recebidos
-FOR EACH ROW EXECUTE fc_credito_cx()
+FOR EACH ROW EXECUTE PROCEDURE fc_credito_cx()
