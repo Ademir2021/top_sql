@@ -502,6 +502,7 @@ LANGUAGE plpgsql;
 CREATE TRIGGER trg_sum_note AFTER INSERT ON itens_sale
 FOR EACH ROW EXECUTE PROCEDURE fc_sum_note()
 
+-- Trigger para creditar valor no caixa
 CREATE OR REPLACE FUNCTION fc_credito_cx()
 RETURNS TRIGGER AS
 $BODY
