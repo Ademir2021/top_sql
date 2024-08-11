@@ -489,12 +489,12 @@ BEGIN
 UPDATE itens_sale
 SET total_product = val_product * amount_product
 WHERE fk_sale = NEW.fk_sale;
-UPDATE sales SET val_rec = ( SELECT SUM( total_product )
-FROM itens_sale WHERE fk_sale = NEW.fk_sale )
-WHERE id_sale = NEW.fk_sale;                          
-UPDATE sales
-SET total_sale = val_rec - disc_sale
-WHERE id_sale = NEW.fk_sale;
+-- UPDATE sales SET val_rec = ( SELECT SUM( total_product )
+-- FROM itens_sale WHERE fk_sale = NEW.fk_sale )
+-- WHERE id_sale = NEW.fk_sale;                          
+-- UPDATE sales
+-- SET total_sale = val_rec - disc_sale
+-- WHERE id_sale = NEW.fk_sale;
 RETURN NEW;
 END;
 $BODY$
