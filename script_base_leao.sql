@@ -339,6 +339,50 @@ insert into caixa_mov (fk_val, credito,saldo)values(1,0,0)
 ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val
 FOREIGN KEY(fk_val) REFERENCES vals_recebidos(id_val) ON UPDATE CASCADE;
 
+
+-- Notas Recebidas ...
+CREATE TABLE notas_recebidas( --create in 19/09/2024
+  id_nota SERIAL NOT NULL,
+  fk_fornecedor INTEGER NOT NULL,
+  data_nota TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  emissao TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  num_nota INTEGER NOT NULL,
+  modelo VARCHAR(10) NOT NULL,
+  v_frete NUMERIC(18,4) NULL,
+  v_seguro NUMERIC(18,4) NULL,
+  desp_acessorias NUMERIC(18,4) NULL,
+  acrescimo NUMERIC(18,4) NULL,
+  desconto NUMERIC(18,4) NULL,
+  t_produto NUMERIC(18,4) NULL,
+  total NUMERIC(18,4) NULL,
+  PRIMARY KEY(id_nota)
+)
+
+CREATE TABLE itens_comprados (
+  id_item_sequen SERIAL NOT NULL,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+  fk_nota INT NOT NULL,
+  fk_item INT NOT NULL,
+  quant INT NOT NULL,
+  v_unit NUMERIC(18, 2) NOT NULL,
+  total NUMERIC(18, 2) NOT NULL,
+  PRIMARY KEY(id_item_sequen, fk_nota)
+)
+
+-- Notas de compras create in 19/08/24
+ALTER TABLE itens_comprados ADD CONSTRAINT sale_fk_item
+FOREIGN KEY(fk_item) REFERENCES notas_recebidas(id_nota) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE itens_comprados ADD CONSTRAINT product_fk_item
+FOREIGN KEY(fk_item) REFERENCES products(id_product) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE notas_recebidas ADD CONSTRAINT person_fk_fornecedor
+FOREIGN KEY(fk_fornecedor) REFERENCES persons(id_person) ON UPDATE CASCADE ON DELETE CASCADE;
+
+-- ALTER TABLE sales ADD CONSTRAINT filial_fk_name_filial
+-- FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
+-- ALTER TABLE sales ADD CONSTRAINT user_fk_name_user
+
+
+
 -- ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
 -- FOREIGN KEY(fk_conta) REFERENCES contas_receber(id_conta) ON UPDATE CASCADE; //removido
 -- ALTER TABLE vals_recebidos ADD CONSTRAINT sale_val_rec_fk_sale
