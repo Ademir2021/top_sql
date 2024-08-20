@@ -310,7 +310,6 @@ contas_receber(
   ALTER TABLE contas_receber ADD CONSTRAINT person_fk_pagador
   FOREIGN key (fk_pagador) REFERENCES persons(id_person) ON UPDATE CASCADE;
 
-
 CREATE TABLE vals_recebidos(
   id_val SERIAL NOT NULL,
   fk_conta INTEGER NOT NULL,
@@ -339,8 +338,7 @@ insert into caixa_mov (fk_val, credito,saldo)values(1,0,0)
 ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val
 FOREIGN KEY(fk_val) REFERENCES vals_recebidos(id_val) ON UPDATE CASCADE;
 
-
--- Notas Recebidas ...
+-- Notas Recebidas --
 CREATE TABLE notas_recebidas( --create in 19/09/2024
   id_nota SERIAL NOT NULL,
   fk_fornecedor INTEGER NOT NULL,
@@ -369,6 +367,39 @@ CREATE TABLE itens_comprados (
   PRIMARY KEY(id_item_sequen, fk_nota)
 )
 
+CREATE TABLE contas_pagar(
+  id_conta SERIAL NOT NULL,
+  fk_filial INTEGER NOT NULL,
+  tipo VARCHAR(10) NOT NULL,
+  fk_compra INTEGER NULL,
+  fk_user INTEGER NOT NULL,
+  parcela VARCHAR(5) NOT NULL,
+  valor NUMERIC(18,4) NOT NULL,
+  multa NUMERIC(18,4) NOT NULL,
+  juros NUMERIC(18,4) NOT NULL,
+  desconto NUMERIC(18,4) NOT NULL,
+  emissao TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  vencimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  saldo NUMERIC(18,4) NOT NULL,
+  pagamento TIMESTAMP WITHOUT TIME ZONE NULL,
+  recebimento NUMERIC(18,4) NOT NULL,
+  observacao VARCHAR(100) NULL,
+  fk_pagador INTEGER NOT NULL
+  PRIMARY KEY (id_conta)
+)
+
+CREATE TABLE vals_pagos(
+  id_val SERIAL NOT NULL,
+  fk_conta INTEGER NOT NULL,
+  fk_compra INTEGER NOT NULL,
+  fk_user INTEGER NOT NULL,
+  valor NUMERIC(18,4) NOT NULL,
+  data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  descricao VARCHAR(50) NULL
+  fk_person INTEGER NULL 
+  PRIMARY KEY(id_val)
+)
+
 -- Notas de compras create in 19/08/24
 ALTER TABLE itens_comprados ADD CONSTRAINT sale_fk_item
 FOREIGN KEY(fk_item) REFERENCES notas_recebidas(id_nota) ON UPDATE CASCADE ON DELETE CASCADE;
@@ -380,7 +411,6 @@ FOREIGN KEY(fk_fornecedor) REFERENCES persons(id_person) ON UPDATE CASCADE ON DE
 -- ALTER TABLE sales ADD CONSTRAINT filial_fk_name_filial
 -- FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 -- ALTER TABLE sales ADD CONSTRAINT user_fk_name_user
-
 
 
 -- ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
