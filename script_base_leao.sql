@@ -412,7 +412,6 @@ FOREIGN KEY(fk_fornecedor) REFERENCES persons(id_person) ON UPDATE CASCADE ON DE
 -- FOREIGN KEY(fk_name_filial) REFERENCES filiais(id_filial) ON UPDATE CASCADE ON DELETE CASCADE;
 -- ALTER TABLE sales ADD CONSTRAINT user_fk_name_user
 
-
 -- ALTER TABLE vals_recebidos ADD CONSTRAINT contas_receber_fk_conta /* create 23/07/2024 */
 -- FOREIGN KEY(fk_conta) REFERENCES contas_receber(id_conta) ON UPDATE CASCADE; //removido
 -- ALTER TABLE vals_recebidos ADD CONSTRAINT sale_val_rec_fk_sale
@@ -591,3 +590,18 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_credito_cx AFTER INSERT ON vals_recebidos
 FOR EACH ROW EXECUTE PROCEDURE fc_credito_cx()
+
+-- Trigger para debitar valor no caixa
+CREATE OR REPLACE FUNCTION fc_debito_cx()
+RETURNS TRIGGER AS
+$BODY$
+BEGIN
+INSERT INTO caixa_mov (fk_val, debito, saldo)
+VALUES (new.id_val, new.valor, new.valor - (SELECT MAX(saldo) FROM caixa_mov));
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_debito_cx AFTER INSERT ON vals_pagos
+FOR EACH ROW EXECUTE PROCEDURE fc_debito_cx()
