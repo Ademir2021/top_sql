@@ -33,3 +33,14 @@ DELETE FROM persons;
 ALTER SEQUENCE persons_id_person_seq RESTART WITH 1;
 DELETE FROM contacts;
 ALTER SEQUENCE contacts_id_seq RESTART WITH 1;
+
+-- reset notas_recebidas --
+DELETE FROM caixa_mov where id_caixa > 4;
+ALTER SEQUENCE caixa_mov_id_caixa_seq RESTART WITH 5;
+DELETE FROM vals_pagos;
+ALTER SEQUENCE vals_pagos_id_val_seq RESTART WITH 1;
+DELETE FROM contas_pagar;
+ALTER SEQUENCE contas_pagar_id_conta_seq RESTART WITH 1;
+DELETE FROM notas_recebidas;
+ALTER SEQUENCE notas_recebidas_id_nota_seq RESTART WITH 1;
+ALTER SEQUENCE itens_comprados_id_item_sequen_seq RESTART WITH 1;

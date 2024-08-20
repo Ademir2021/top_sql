@@ -339,7 +339,7 @@ ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val
 FOREIGN KEY(fk_val) REFERENCES vals_recebidos(id_val) ON UPDATE CASCADE;
 
 -- Notas Recebidas --
-CREATE TABLE notas_recebidas( --create in 19/09/2024
+CREATE TABLE notas_recebidas( -- create in 19/08/2024
   id_nota SERIAL NOT NULL,
   fk_fornecedor INTEGER NOT NULL,
   data_nota TIMESTAMP WITHOUT TIME ZONE NOT NULL,
@@ -356,7 +356,7 @@ CREATE TABLE notas_recebidas( --create in 19/09/2024
   PRIMARY KEY(id_nota)
 )
 
-CREATE TABLE itens_comprados (
+CREATE TABLE itens_comprados ( -- create in 19/08/2024
   id_item_sequen SERIAL NOT NULL,
   created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
   fk_nota INT NOT NULL,
@@ -367,7 +367,7 @@ CREATE TABLE itens_comprados (
   PRIMARY KEY(id_item_sequen, fk_nota)
 )
 
-CREATE TABLE contas_pagar(
+CREATE TABLE contas_pagar( -- create in 19/08/2024
   id_conta SERIAL NOT NULL,
   fk_filial INTEGER NOT NULL,
   tipo VARCHAR(10) NOT NULL,
@@ -384,25 +384,25 @@ CREATE TABLE contas_pagar(
   pagamento TIMESTAMP WITHOUT TIME ZONE NULL,
   recebimento NUMERIC(18,4) NOT NULL,
   observacao VARCHAR(100) NULL,
-  fk_pagador INTEGER NOT NULL
+  fk_pagador INTEGER NOT NULL,
   PRIMARY KEY (id_conta)
 )
 
-CREATE TABLE vals_pagos(
+CREATE TABLE vals_pagos( -- create in 19/08/2024
   id_val SERIAL NOT NULL,
   fk_conta INTEGER NOT NULL,
   fk_compra INTEGER NOT NULL,
   fk_user INTEGER NOT NULL,
   valor NUMERIC(18,4) NOT NULL,
   data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-  descricao VARCHAR(50) NULL
-  fk_person INTEGER NULL 
+  descricao VARCHAR(50) NULL,
+  fk_person INTEGER NULL, 
   PRIMARY KEY(id_val)
 )
 
 -- Notas de compras create in 19/08/24
 ALTER TABLE itens_comprados ADD CONSTRAINT sale_fk_item
-FOREIGN KEY(fk_item) REFERENCES notas_recebidas(id_nota) ON UPDATE CASCADE ON DELETE CASCADE;
+FOREIGN KEY(fk_nota) REFERENCES notas_recebidas(id_nota) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE itens_comprados ADD CONSTRAINT product_fk_item
 FOREIGN KEY(fk_item) REFERENCES products(id_product) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE notas_recebidas ADD CONSTRAINT person_fk_fornecedor
@@ -520,7 +520,6 @@ JOIN users ON users.id = sales.fk_name_user
 JOIN ceps ON ceps.id_cep = persons.fk_cep;
 
 /* inserts **/
-
 INSERT INTO brands(name_brand) VALUES ('Geral');
 INSERT INTO sectors(name_sector) VALUES ('Geral');
 INSERT INTO filiais(
@@ -582,7 +581,7 @@ RETURNS TRIGGER AS
 $BODY$
 BEGIN
 INSERT INTO caixa_mov (fk_val, credito, saldo)
-VALUES (new.id_val, new.valor, new.valor + (SELECT MAX(saldo) FROM caixa_mov));
+VALUES (new.id_val, new.valor, new.valor + (select saldo from caixa_mov where id_caixa = (select MAX(id_caixa) from caixa_mov)));
 RETURN NEW;
 END;
 $BODY$
@@ -597,7 +596,7 @@ RETURNS TRIGGER AS
 $BODY$
 BEGIN
 INSERT INTO caixa_mov (fk_val, debito, saldo)
-VALUES (new.id_val, new.valor, new.valor - (SELECT MAX(saldo) FROM caixa_mov));
+VALUES (new.id_val, new.valor, (select saldo from caixa_mov where id_caixa = (select MAX(id_caixa) from caixa_mov)) - new.valor);
 RETURN NEW;
 END;
 $BODY$
