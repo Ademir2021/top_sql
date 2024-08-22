@@ -385,8 +385,13 @@ CREATE TABLE contas_pagar( -- create in 19/08/2024
   recebimento NUMERIC(18,4) NOT NULL,
   observacao VARCHAR(100) NULL,
   fk_pagador INTEGER NOT NULL,
+  -- fk_despesa INTEGER NULL
   PRIMARY KEY (id_conta)
 )
+ ALTER TABLE contas_pagar ADD COLUMN fk_despesa INTEGER NULL; -- create in 22/08/24
+ ALTER TABLE contas_pagar ADD CONSTRAINT despesa_fk_despesa
+ FOREIGN KEY(fk_despesa) REFERENCES despesas(id) ON UPDATE CASCADE;
+
 
 CREATE TABLE vals_pagos( -- create in 19/08/2024
   id_val SERIAL NOT NULL,
@@ -399,6 +404,35 @@ CREATE TABLE vals_pagos( -- create in 19/08/2024
   fk_person INTEGER NULL, 
   PRIMARY KEY(id_val)
 )
+
+CREATE TABLE despesas( -- create in 22/08/24
+id SERIAL NOT NULL,
+name VARCHAR(20),
+fk_setor INTEGER NOT NULL,
+PRIMARY KEY(id)
+)
+
+CREATE TABLE setor_despesas( -- create in 22/08/24
+id SERIAL NOT NULL,
+name VARCHAR(25),
+tipo VARCHAR(10),
+PRIMARY KEY(id)
+)
+ALTER TABLE despesas ADD CONSTRAINT setor_despesas_fk_setor
+FOREIGN KEY(fk_setor) REFERENCES setor_despesas(id) ON UPDATE CASCADE;
+
+insert into setor_despesas (name, tipo) values('Comercial', 'Variavel');
+insert into setor_despesas (name, tipo) values('Administrativa', 'Variavel');
+insert into setor_despesas (name, tipo) values('Gerencial', 'Fixa');
+
+insert into despesas (name, fk_setor) values ('Compras Normais', 1);
+insert into despesas (name, fk_setor) values ('Energia Eletrica', 3);
+insert into despesas (name, fk_setor) values ('Agua e Esgoto', 3);
+insert into despesas (name, fk_setor) values ('Internet', 3);
+insert into despesas (name, fk_setor) values ('Das - Mei', 3);
+insert into despesas (name, fk_setor) values ('ICMS', 2);
+insert into despesas (name, fk_setor) values ('Royalty Sistema', 1);
+insert into despesas (name, fk_setor) values ('Pro-Labore', 2);
 
 -- Notas de compras create in 19/08/24
 ALTER TABLE itens_comprados ADD CONSTRAINT sale_fk_item
