@@ -384,13 +384,16 @@ CREATE TABLE contas_pagar( -- create in 19/08/2024
   pagamento TIMESTAMP WITHOUT TIME ZONE NULL,
   recebimento NUMERIC(18,4) NOT NULL,
   observacao VARCHAR(100) NULL,
-  fk_pagador INTEGER NOT NULL,
+  -- fk_pagador INTEGER NOT NULL, --> remover
+  -- fk_beneficiario, --> incluir
   -- fk_despesa INTEGER NULL
   PRIMARY KEY (id_conta)
 )
  ALTER TABLE contas_pagar ADD COLUMN fk_despesa INTEGER NULL; -- create in 22/08/24
  ALTER TABLE contas_pagar ADD CONSTRAINT despesa_fk_despesa
  FOREIGN KEY(fk_despesa) REFERENCES despesas(id) ON UPDATE CASCADE;
+
+ ALTER TABLE contas_pagar ADD COLUMN fk_beneficiario INTEGER NULL; -- create in 23/08/24
 
 
 CREATE TABLE vals_pagos( -- create in 19/08/2024
