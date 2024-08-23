@@ -402,8 +402,10 @@ CREATE TABLE vals_pagos( -- create in 19/08/2024
   data_recebimento TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   descricao VARCHAR(50) NULL,
   fk_person INTEGER NULL, 
+    -- fk_despesa INTEGER NULL
   PRIMARY KEY(id_val)
 )
+ ALTER TABLE vals_pagos ADD COLUMN fk_despesa INTEGER NULL; -- create in 22/08/24
 
 CREATE TABLE despesas( -- create in 22/08/24
 id SERIAL NOT NULL,
@@ -433,6 +435,10 @@ insert into despesas (name, fk_setor) values ('Das - Mei', 3);
 insert into despesas (name, fk_setor) values ('ICMS', 2);
 insert into despesas (name, fk_setor) values ('Royalty Sistema', 1);
 insert into despesas (name, fk_setor) values ('Pro-Labore', 2);
+insert into despesas (name, fk_setor) values ('Cloud-Storage', 1);
+insert into despesas (name, fk_setor) values ('Cloud-SisWeb', 1);
+insert into despesas (name, fk_setor) values ('Combustivel', 2);
+insert into despesas (name, fk_setor) values ('Aluguel', 3);
 
 -- Notas de compras create in 19/08/24
 ALTER TABLE itens_comprados ADD CONSTRAINT sale_fk_item
