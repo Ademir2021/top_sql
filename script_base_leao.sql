@@ -70,8 +70,8 @@ CREATE TABLE
     id_person SERIAL NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE NULL,
-    name_pers VARCHAR(60) NOT NULL,
-    cpf_pers VARCHAR(11) NOT NULL,
+    name_pers VARCHAR(60) NULL,
+    cpf_pers VARCHAR(11) NULL,
     address_pers VARCHAR(60) NOT NULL,
     -- bairro_pers VARCHAR(60) NOT NULL,
     -- fk_cep INT NOT NULL;
@@ -86,7 +86,32 @@ CREATE TABLE
   ALTER TABLE persons ADD COLUMN  bairro_pers VARCHAR(600)NOT NULL
   ALTER TABLE persons ADD COLUMN fk_cep INT NOT NULL
   /**Incluido na tabela person o campo num_address em 04/07/2024 */
-  ALTER TABLE persons ADD COLUMN num_address VARCHAR(6) NOT 
+  ALTER TABLE persons ADD COLUMN num_address VARCHAR(6) NOT
+
+  /**Alterações realizadas na tabela person em 30/08/2024 */
+  ALTER TABLE persons ADD COLUMN  rg VARCHAR(10) NULL;
+  ALTER TABLE persons ADD COLUMN  cnpj VARCHAR(14) NULL;
+  ALTER TABLE persons ADD COLUMN  inscricao VARCHAR(10) NULL;
+  ALTER TABLE persons ADD COLUMN  fantasia VARCHAR(60) NULL;
+  ALTER TABLE persons ADD COLUMN  limit_cred NUMERIC(18, 2) NULL;
+  ALTER TABLE persons ADD COLUMN  fk_grupo INTEGER NULL;
+
+  ALTER TABLE persons ADD CONSTRAINT person_fk_grupo
+  FOREIGN KEY(fk_grupo) REFERENCES grupos_persons(id) ON UPDATE CASCADE;
+
+  CREATE TABLE
+  grupos_persons( -- create in 30/08/24
+    id SERIAL NOT NULL,
+    name_grupo VARCHAR(30),
+    PRIMARY KEY(id)
+  )
+
+  insert into grupos_persons (name_grupo) values ('1-Cliente');
+  insert into grupos_persons (name_grupo) values ('2-Fornecedor');
+  insert into grupos_persons (name_grupo) values ('3-Transportadora');
+  insert into grupos_persons (name_grupo) values ('4-Geral');
+
+
 
   ALTER TABLE ceps ADD PRIMARY KEY (id_cep);
 
