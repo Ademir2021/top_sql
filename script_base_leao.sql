@@ -79,6 +79,12 @@ CREATE TABLE
     fk_name_filial INT NOT NULL,
     fk_id_user INT NOT NULL,
     phone_pers VARCHAR(11) NOT NULL,
+    -- rg VARCHAR(10) NULL,
+    -- cnpj VARCHAR(14) NULL,
+    -- inscricao VARCHAR(10) NULL,
+    -- fantasia VARCHAR(60) NULL,
+    -- imit_cred NUMERIC(18, 2) NULL,
+    -- fk_grupo INTEGER NULL,
     PRIMARY KEY (id_person)
   );
 
