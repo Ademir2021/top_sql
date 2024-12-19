@@ -22,8 +22,14 @@ CREATE TABLE
     inscric VARCHAR(14) NOT NULL,
     phone VARCHAR(11) NOT NULL,
     email VARCHAR(60) NOT NULL,
+    -- fk_person INT NOT NULL,
     PRIMARY KEY (id_filial)
   );
+  ALTER TABLE filiais ADD COLUMN fk_person INT NOT NULL default 4 -- criada em 18-12-24
+
+  ALTER TABLE filiais ADD CONSTRAINT filiais_fk_person -- cridada em 19-12-24
+  FOREIGN KEY(fk_person) REFERENCES persons(id_person) ON UPDATE CASCADE;
+
 CREATE TABLE
   users (
     id SERIAL NOT NULL,
@@ -473,6 +479,16 @@ insert into despesas (name, fk_setor) values ('Cloud-Storage', 1);
 insert into despesas (name, fk_setor) values ('Cloud-SisWeb', 1);
 insert into despesas (name, fk_setor) values ('Combustivel', 2);
 insert into despesas (name, fk_setor) values ('Aluguel', 3);
+
+CREATE TABLE paises(-- create in 18/12/2024
+created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
+id SERIAL NOT NULL,
+nome_pais VARCHAR(10),
+sigla VARCHAR (5),
+ddi VARCHAR(2),
+cod_pais varchar(8)
+)
+insert into paises(nome_pais, sigla, ddi, cod_pais) values('Brasil', 'BRA', '55', '1.058')
 
 -- Notas de compras create in 19/08/24
 ALTER TABLE itens_comprados ADD CONSTRAINT sale_fk_item
