@@ -167,6 +167,7 @@ CREATE TABLE
     fk_name_user INT NOT NULL,
     PRIMARY KEY (id_sale)
   );
+    -- create in 21/12/24
     ALTER TABLE sales ADD COLUMN id_nfe VARCHAR(12) NULL
     ALTER TABLE sales ADD COLUMN doc_nfe VARCHAR(16) NULL
     ALTER TABLE sales ADD COLUMN situacao_nfe VARCHAR(16) NULL
