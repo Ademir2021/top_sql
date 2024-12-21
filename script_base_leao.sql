@@ -167,6 +167,13 @@ CREATE TABLE
     fk_name_user INT NOT NULL,
     PRIMARY KEY (id_sale)
   );
+    ALTER TABLE sales ADD COLUMN id_nfe VARCHAR(12) NULL
+    ALTER TABLE sales ADD COLUMN doc_nfe VARCHAR(16) NULL
+    ALTER TABLE sales ADD COLUMN situacao_nfe VARCHAR(16) NULL
+    ALTER TABLE sales ADD COLUMN chave_nfe VARCHAR(200) NULL
+    ALTER TABLE sales ADD COLUMN protocolo_nfe VARCHAR(200) NULL
+
+
   CREATE TABLE
     itens_sale (
     id_item_sequen SERIAL NOT NULL,
