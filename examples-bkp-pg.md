@@ -18,6 +18,6 @@
 
 # backup e restore da base centroinfo no easyCluster e no debian [X]
 `pg_dump -U ademir -d centroinfo -F c -b -v -f centroinfo.bkp`[backup cloud cluster centroinfo][ok] 
-`pg_restore -U ademir -d centroinfo -v -c centroinfo.bkp`[restore base centroinfo na nuvem][]
+`pg_restore -U ademir -d centroinfo -v -c centroinfo.bkp`[restore base centroinfo na nuvem][ok]
 `sudo -u postgres pg_restore -d centroinfo < centroinfo.bkp`[restore base centroinfo no debian DEV][ok]
 
