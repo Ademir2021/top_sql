@@ -44,3 +44,15 @@ ALTER SEQUENCE contas_pagar_id_conta_seq RESTART WITH 1;
 DELETE FROM notas_recebidas;
 ALTER SEQUENCE notas_recebidas_id_nota_seq RESTART WITH 1;
 ALTER SEQUENCE itens_comprados_id_item_sequen_seq RESTART WITH 1;
+
+-- reset vals_pagos --
+select *from vals_pagos
+delete from vals_pagos where id_val = 72
+SELECT *FROM vals_pagos_id_val_seq
+ALTER SEQUENCE vals_pagos_id_val_seq RESTART WITH 32
+
+-- reset caixa mov --
+select *from caixa_mov
+delete from caixa_mov where id_Caixa = 113
+SELECT *FROM caixa_mov_id_caixa_seq
+ALTER SEQUENCE caixa_mov_id_caixa_seq RESTART WITH 104
