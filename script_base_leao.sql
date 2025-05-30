@@ -380,7 +380,8 @@ CREATE TABLE vals_recebidos(
     PRIMARY KEY(id_caixa)
   )
 insert into caixa_mov (fk_val, credito,saldo)values(1,0,0)
-ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val
+
+ALTER TABLE caixa_mov ADD CONSTRAINT val_rec_fk_val -- não usar esta constraint confrlito com vals_pagos.
 FOREIGN KEY(fk_val) REFERENCES vals_recebidos(id_val) ON UPDATE CASCADE;
 
 -- Notas Recebidas --
